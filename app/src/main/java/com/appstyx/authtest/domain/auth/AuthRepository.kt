@@ -1,4 +1,4 @@
-package com.appstyx.authtest.domain
+package com.appstyx.authtest.domain.auth
 
 interface AuthRepository {
     suspend fun getGenders(): List<Gender>

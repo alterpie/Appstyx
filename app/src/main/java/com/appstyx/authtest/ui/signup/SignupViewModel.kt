@@ -3,7 +3,7 @@ package com.appstyx.authtest.ui.signup
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.appstyx.authtest.common.BaseViewModel
-import com.appstyx.authtest.domain.AuthRepository
+import com.appstyx.authtest.domain.auth.AuthRepository
 import com.appstyx.authtest.domain.ValidationError
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.appstyx.authtest.data.api
+package com.appstyx.authtest.data.api.auth
 
 import com.appstyx.authtest.data.model.GendersResponse
 import com.appstyx.authtest.data.model.TokenResponse

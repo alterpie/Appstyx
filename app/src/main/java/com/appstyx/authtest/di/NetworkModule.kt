@@ -1,7 +1,8 @@
 package com.appstyx.authtest.di
 
 import com.appstyx.authtest.BuildConfig
-import com.appstyx.authtest.data.api.model.ApiErrorResponse
+import com.appstyx.authtest.data.api.auth.model.ApiErrorResponse
+import com.appstyx.authtest.data.storage.AuthStorage
 import com.appstyx.authtest.domain.ValidationError
 import dagger.Module
 import dagger.Provides

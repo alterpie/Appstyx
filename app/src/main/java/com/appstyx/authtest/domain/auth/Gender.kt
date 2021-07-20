@@ -1,4 +1,4 @@
-package com.appstyx.authtest.domain
+package com.appstyx.authtest.domain.auth
 
 data class Gender(
     val id: String,

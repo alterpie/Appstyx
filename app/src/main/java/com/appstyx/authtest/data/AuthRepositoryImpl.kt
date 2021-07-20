@@ -1,9 +1,9 @@
 package com.appstyx.authtest.data
 
-import com.appstyx.authtest.data.api.AuthApi
+import com.appstyx.authtest.data.api.auth.AuthApi
 import com.appstyx.authtest.data.storage.AuthStorage
-import com.appstyx.authtest.domain.AuthRepository
-import com.appstyx.authtest.domain.Gender
+import com.appstyx.authtest.domain.auth.AuthRepository
+import com.appstyx.authtest.domain.auth.Gender
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

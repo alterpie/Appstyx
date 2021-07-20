@@ -28,3 +28,4 @@ _Please add here any comments about decisions you made while implementing the re
 
 Task 1: this task took most time as I needed to setup all infrastructure(Repository, API, DI etc) and introduce some common classes to reduce boilerplate. I haven't implemented any error handling for genders loading as I assumed it is out of context of the task.
 Task 2: validation is done inside ViewModel for the screen. As we have just 1 screen that requires some validation it is convenient to have it there. But in case of larger app most probably several screens will require similar validation so it this case more convenient way yo implement it would be to create a Validator interface that provide methods for validation of specific input(like validateEmail, validatePassword methods).
+Task 5: error handling not implemented as was assumed that it is out of the context of the task

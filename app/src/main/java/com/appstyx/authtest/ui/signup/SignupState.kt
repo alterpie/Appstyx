@@ -1,6 +1,6 @@
 package com.appstyx.authtest.ui.signup
 
-import com.appstyx.authtest.domain.Gender
+import com.appstyx.authtest.domain.auth.Gender
 
 data class SignupState(
     val genders: List<Gender>,

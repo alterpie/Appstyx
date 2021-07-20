@@ -3,7 +3,7 @@ package com.appstyx.authtest.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appstyx.authtest.common.Event
-import com.appstyx.authtest.domain.AuthRepository
+import com.appstyx.authtest.domain.auth.AuthRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
