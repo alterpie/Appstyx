@@ -23,4 +23,8 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun isAuthorised(): Boolean {
         return authStorage.getToken() != null
     }
+
+    override suspend fun logout() {
+        authStorage.clearToken()
+    }
 }

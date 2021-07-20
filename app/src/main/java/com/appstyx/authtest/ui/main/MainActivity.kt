@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.appstyx.authtest.R
 import com.appstyx.authtest.di.AppInjector
 import com.appstyx.authtest.ui.home.HomeFragment
 import com.appstyx.authtest.ui.main.MainViewModel.Destination.Home
 import com.appstyx.authtest.ui.main.MainViewModel.Destination.Signup
 import com.appstyx.authtest.ui.signup.SignupFragment
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -36,19 +39,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModelObservers() {
-        val lifecycleOwner: LifecycleOwner = this
         with(viewModel) {
-            changeDestinationEvent.observe(lifecycleOwner) { destination ->
-                val fragment = when (destination) {
-                    Signup -> SignupFragment.newInstance()
-                    Home -> HomeFragment.newInstance()
-                    else -> throw IllegalArgumentException("Destination not supported")
+            events.onEach { event ->
+                if (event is MainEvent.Navigate) {
+                    val fragment = when (event.destination) {
+                        Signup -> SignupFragment.newInstance()
+                        Home -> HomeFragment.newInstance()
+                    }
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit()
                 }
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commit()
             }
+                .launchIn(lifecycleScope)
         }
     }
 }

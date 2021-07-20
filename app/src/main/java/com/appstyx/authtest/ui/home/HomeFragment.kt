@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleObserver
@@ -17,6 +18,7 @@ import coil.load
 import com.appstyx.authtest.databinding.FragmentHomeBinding
 import com.appstyx.authtest.di.AppInjector
 import com.appstyx.authtest.ui.base.BaseFragment
+import com.appstyx.authtest.ui.main.MainViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -30,6 +32,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return vmProvider.get() as T
+            }
+        }
+    }
+
+    @Inject
+    internal lateinit var mainVmProvider: Provider<MainViewModel>
+    private val mainViewModel by activityViewModels<MainViewModel> {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return mainVmProvider.get() as T
             }
         }
     }
@@ -50,7 +62,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 viewModel.state
                     .onEach { render(it, binding) }
                     .launchIn(viewLifecycleOwner.lifecycleScope)
+                viewModel.events
+                    .onEach { onEvent(it) }
+                    .launchIn(viewLifecycleOwner.lifecycleScope)
             }
+        }
+    }
+
+    private fun onEvent(event: Any) {
+        when (event) {
+            HomeEvent.LogoutSuccess -> mainViewModel.navigate(MainViewModel.Destination.Signup)
         }
     }
 

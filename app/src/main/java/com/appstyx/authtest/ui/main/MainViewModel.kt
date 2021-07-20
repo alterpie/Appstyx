@@ -1,21 +1,18 @@
 package com.appstyx.authtest.ui.main
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appstyx.authtest.common.Event
+import com.appstyx.authtest.common.BaseViewModel
 import com.appstyx.authtest.domain.auth.AuthRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val authRepository: AuthRepository
-) : ViewModel() {
+) : BaseViewModel<MainState>(MainState) {
 
     enum class Destination {
         Signup, Home
     }
-
-    val changeDestinationEvent = Event<Destination>()
 
     init {
         viewModelScope.launch {
@@ -24,8 +21,11 @@ class MainViewModel @Inject constructor(
             } else {
                 Destination.Signup
             }
-            changeDestinationEvent.value = destination
+            sendEvent(MainEvent.Navigate(destination))
         }
+    }
 
+    fun navigate(destination: Destination){
+        sendEvent(MainEvent.Navigate(destination))
     }
 }

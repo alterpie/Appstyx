@@ -26,4 +26,8 @@ class AuthStorageImpl @Inject constructor(private val context: Context) : AuthSt
     override suspend fun getToken(): String? {
         return dataStore.data.map { it[KEY_TOKEN] }.firstOrNull()
     }
+
+    override suspend fun clearToken() {
+        dataStore.edit { it.clear() }
+    }
 }

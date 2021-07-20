@@ -38,7 +38,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
     }
     @Inject
     internal lateinit var mainVmProvider: Provider<MainViewModel>
-    private val mainViewModel by viewModels<MainViewModel> {
+    private val mainViewModel by activityViewModels<MainViewModel> {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return mainVmProvider.get() as T
@@ -80,7 +80,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
                 getString(R.string.signup_gender_validation_empty_field)
             SignupEvent.GenderEmpty -> genderSelector.error =
                 getString(R.string.signup_gender_validation_empty_field)
-            SignupEvent.SignupSuccess -> mainViewModel.changeDestinationEvent.postValue(MainViewModel.Destination.Home)
+            SignupEvent.SignupSuccess -> mainViewModel.navigate(MainViewModel.Destination.Home)
             is SignupEvent.ApiError -> {
                 val inputLayout = when (event.key) {
                     InputKey.Email -> inputLayoutEmail
