@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import com.appstyx.authtest.R
+import com.appstyx.authtest.di.AppInjector
 import com.appstyx.authtest.ui.home.HomeFragment
 import com.appstyx.authtest.ui.main.MainViewModel.Destination.Home
 import com.appstyx.authtest.ui.main.MainViewModel.Destination.Signup
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppInjector.init()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

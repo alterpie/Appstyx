@@ -25,3 +25,5 @@ Please complete the following tasks to help us better address your Android exper
 
 ## Your thoughts
 _Please add here any comments about decisions you made while implementing the requested changes, reasoning about any dependencies you may have added to the project, any issues you may have faced, problematic code you would like to change..._
+
+Task 1: this task took most time as I needed to setup all infrastructure(Repository, API, DI etc) and introduce some common classes to reduce boilerplate. I haven't implemented any error handling for genders loading as I assumed it is out of context of the task.

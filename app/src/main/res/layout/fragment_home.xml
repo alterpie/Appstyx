@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"
@@ -23,91 +23,91 @@
         android:id="@+id/textViewTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:drawableEndCompat="@drawable/ic_home"
-        android:text="@string/home_title"
-        android:textSize="28sp"
         android:layout_marginTop="20dp"
         android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/home_title"
+        android:textSize="28sp"
+        app:drawableEndCompat="@drawable/ic_home"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewAvatarLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
         android:text="@string/home_avatar"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
 
     <ImageView
         android:id="@+id/imageViewAvatar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.20"
         app:layout_constraintDimensionRatio="1"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/textViewAvatarLabel"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewAvatarLabel"
+        app:layout_constraintWidth_percent="0.20" />
 
     <TextView
         android:id="@+id/textViewFirstNameLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
         android:text="@string/home_first_name"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/imageViewAvatar"/>
+        app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
 
     <TextView
         android:id="@+id/textViewFirstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
         android:gravity="center_vertical"
-        tools:text="Stan"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/textViewFirstNameLabel"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewFirstNameLabel"
+        tools:text="Stan" />
 
     <TextView
         android:id="@+id/textViewLastNameLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
         android:text="@string/home_last_name"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/textViewFirstName"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewFirstName" />
 
     <TextView
         android:id="@+id/textViewLastName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
         android:gravity="center_vertical"
-        tools:text="Smith"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/textViewLastNameLabel"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewLastNameLabel"
+        tools:text="Smith" />
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="64dp"
         android:layout_marginBottom="20dp"
-        android:textSize="16sp"
+        android:minHeight="64dp"
         android:text="@string/home_logout"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="@id/guidelineStart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
