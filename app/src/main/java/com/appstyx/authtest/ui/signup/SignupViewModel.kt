@@ -11,8 +11,27 @@ class SignupViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel<SignupState>(SignupState.Initial) {
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun onSignupClick() {
-        // TODO
+        val validationEvents = buildList {
+            if (stateValue.email.isBlank()) {
+                add(SignupEvent.EmailEmpty)
+            }
+            if (stateValue.firstName.isBlank()) {
+                add(SignupEvent.FirstNameEmpty)
+            }
+            if (stateValue.lastName.isBlank()) {
+                add(SignupEvent.LastNameEmpty)
+            }
+            if (stateValue.selectedGender == null) {
+                add(SignupEvent.GenderEmpty)
+            }
+        }
+        if (validationEvents.isEmpty()) {
+            // signup call
+        } else {
+            validationEvents.forEach(::sendEvent)
+        }
     }
 
     fun loadGenders() {
@@ -26,5 +45,17 @@ class SignupViewModel @Inject constructor(
     fun selectGender(position: Int) {
         stateValue.genders.getOrNull(position)
             ?.let { updateState { copy(selectedGender = it) } }
+    }
+
+    fun onEmailChanged(input: String) {
+        updateState { copy(email = input) }
+    }
+
+    fun onFirstNameChanged(input: String) {
+        updateState { copy(firstName = input) }
+    }
+
+    fun onLastNameChanged(input: String) {
+        updateState { copy(lastName = input) }
     }
 }

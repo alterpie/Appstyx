@@ -12,7 +12,7 @@ abstract class BaseViewModel<State : Any>(initialState: State) : ViewModel() {
     private val _state = MutableStateFlow(initialState)
 
     val events: Flow<Any> get() = _events
-    private val _events = MutableSharedFlow<Any>(replay = 0)
+    private val _events = MutableSharedFlow<Any>(replay = 0, extraBufferCapacity = 5)
 
     protected val stateValue: State get() = _state.value
 

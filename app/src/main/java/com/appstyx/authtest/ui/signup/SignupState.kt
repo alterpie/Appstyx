@@ -5,8 +5,11 @@ import com.appstyx.authtest.domain.Gender
 data class SignupState(
     val genders: List<Gender>,
     val selectedGender: Gender?,
+    val email: String,
+    val firstName: String,
+    val lastName: String,
 ) {
     companion object {
-        val Initial = SignupState(emptyList(), null)
+        val Initial = SignupState(emptyList(), null, "", "", "")
     }
 }

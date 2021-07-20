@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleObserver
@@ -48,10 +49,25 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
                 initViews(binding)
                 viewModel.loadGenders()
 
+                viewModel.events
+                    .onEach { onEvent(it, binding) }
+                    .launchIn(viewLifecycleOwner.lifecycleScope)
                 viewModel.state
                     .onEach { render(it, binding) }
                     .launchIn(viewLifecycleOwner.lifecycleScope)
             }
+        }
+    }
+
+    private fun onEvent(event: Any, binding: FragmentSignupBinding) = with(binding) {
+        when (event) {
+            SignupEvent.EmailEmpty -> inputLayoutEmail.error = getString(R.string.signup_gender_validation_empty_field)
+            SignupEvent.FirstNameEmpty -> inputLayoutFirstName.error =
+                getString(R.string.signup_gender_validation_empty_field)
+            SignupEvent.LastNameEmpty -> inputLayoutLastName.error =
+                getString(R.string.signup_gender_validation_empty_field)
+            SignupEvent.GenderEmpty -> genderSelector.error =
+                getString(R.string.signup_gender_validation_empty_field)
         }
     }
 
@@ -64,6 +80,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
             setAdapter(ArrayAdapter(requireContext(), R.layout.list_item, names))
             setOnItemClickListener { _, _, position, _ ->
                 viewModel.selectGender(position)
+                genderSelector.error = null
             }
         }
     }
@@ -71,6 +88,18 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
     private fun initViews(binding: FragmentSignupBinding) = with(binding) {
         signupButton.setOnClickListener {
             viewModel.onSignupClick()
+        }
+        inputLayoutEmail.editText?.doAfterTextChanged {
+            inputLayoutEmail.error = null
+            viewModel.onEmailChanged(it?.toString() ?: "")
+        }
+        inputLayoutFirstName.editText?.doAfterTextChanged {
+            inputLayoutFirstName.error = null
+            viewModel.onFirstNameChanged(it?.toString() ?: "")
+        }
+        inputLayoutLastName.editText?.doAfterTextChanged {
+            inputLayoutLastName.error = null
+            viewModel.onLastNameChanged(it?.toString() ?: "")
         }
     }
 
