@@ -19,4 +19,8 @@ class AuthRepositoryImpl @Inject constructor(
         return authApi.signup(email, firstName, lastName, genderId).data.token
             .also { authStorage.saveToken(it) }
     }
+
+    override suspend fun isAuthorised(): Boolean {
+        return authStorage.getToken() != null
+    }
 }

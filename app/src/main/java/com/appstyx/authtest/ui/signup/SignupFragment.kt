@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -35,7 +36,15 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
             }
         }
     }
-    private val mainViewModel by activityViewModels<MainViewModel>()
+    @Inject
+    internal lateinit var mainVmProvider: Provider<MainViewModel>
+    private val mainViewModel by viewModels<MainViewModel> {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return mainVmProvider.get() as T
+            }
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

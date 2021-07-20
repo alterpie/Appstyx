@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AuthStorageImpl @Inject constructor(private val context: Context) : AuthStorage {
@@ -15,8 +17,13 @@ class AuthStorageImpl @Inject constructor(private val context: Context) : AuthSt
     }
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+    private val dataStore get() = context.dataStore
 
     override suspend fun saveToken(token: String) {
-        context.dataStore.edit { it[KEY_TOKEN] = token }
+        dataStore.edit { it[KEY_TOKEN] = token }
+    }
+
+    override suspend fun getToken(): String? {
+        return dataStore.data.map { it[KEY_TOKEN] }.firstOrNull()
     }
 }
