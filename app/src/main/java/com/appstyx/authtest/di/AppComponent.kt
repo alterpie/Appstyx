@@ -1,11 +1,8 @@
 package com.appstyx.authtest.di
 
-import com.appstyx.authtest.data.AuthApi
-import com.appstyx.authtest.data.AuthApiImpl
-import com.appstyx.authtest.data.AuthRepositoryImpl
-import com.appstyx.authtest.domain.AuthRepository
+import android.content.Context
 import com.appstyx.authtest.ui.signup.SignupFragment
-import dagger.Binds
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,6 +14,6 @@ interface AppComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(): AppComponent
+        fun create(@BindsInstance context: Context): AppComponent
     }
 }

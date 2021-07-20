@@ -1,4 +1,4 @@
-package com.appstyx.authtest.data
+package com.appstyx.authtest.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

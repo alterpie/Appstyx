@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleObserver
@@ -17,6 +18,7 @@ import com.appstyx.authtest.R
 import com.appstyx.authtest.databinding.FragmentSignupBinding
 import com.appstyx.authtest.di.AppInjector
 import com.appstyx.authtest.ui.base.BaseFragment
+import com.appstyx.authtest.ui.main.MainViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -33,6 +35,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
             }
         }
     }
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -68,6 +71,15 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>() {
                 getString(R.string.signup_gender_validation_empty_field)
             SignupEvent.GenderEmpty -> genderSelector.error =
                 getString(R.string.signup_gender_validation_empty_field)
+            SignupEvent.SignupSuccess -> mainViewModel.changeDestinationEvent.postValue(MainViewModel.Destination.Home)
+            is SignupEvent.ApiError -> {
+                val inputLayout = when (event.key) {
+                    InputKey.Email -> inputLayoutEmail
+                    InputKey.FirstName -> inputLayoutFirstName
+                    InputKey.LastName -> inputLayoutLastName
+                }
+                inputLayout.error = event.message
+            }
         }
     }
 

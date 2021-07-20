@@ -4,12 +4,17 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.appstyx.authtest.common.BaseViewModel
 import com.appstyx.authtest.domain.AuthRepository
+import com.appstyx.authtest.domain.ValidationError
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SignupViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel<SignupState>(SignupState.Initial) {
+
+    companion object {
+        private const val TAG = "Signup"
+    }
 
     @OptIn(ExperimentalStdlibApi::class)
     fun onSignupClick() {
@@ -28,7 +33,18 @@ class SignupViewModel @Inject constructor(
             }
         }
         if (validationEvents.isEmpty()) {
-            // signup call
+            viewModelScope.launch {
+                runCatching {
+                    authRepository.signup(
+                        stateValue.email,
+                        stateValue.firstName,
+                        stateValue.lastName,
+                        stateValue.selectedGender!!.id
+                    )
+                }
+                    .onSuccess { sendEvent(SignupEvent.SignupSuccess) }
+                    .onFailure { handleSignupError(it) }
+            }
         } else {
             validationEvents.forEach(::sendEvent)
         }
@@ -38,7 +54,7 @@ class SignupViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching { authRepository.getGenders() }
                 .onSuccess { updateState { copy(genders = it) } }
-                .onFailure { Log.d("Signup", it.toString()) }
+                .onFailure { Log.e(TAG, it.toString()) }
         }
     }
 
@@ -57,5 +73,15 @@ class SignupViewModel @Inject constructor(
 
     fun onLastNameChanged(input: String) {
         updateState { copy(lastName = input) }
+    }
+
+    private fun handleSignupError(throwable: Throwable) {
+        if (throwable is ValidationError) {
+            throwable.content.forEach { (key, message) ->
+                InputKey.fromRawValue(key)?.let { sendEvent(SignupEvent.ApiError(it, message)) }
+            }
+        } else {
+            Log.e(TAG, throwable.toString())
+        }
     }
 }
